@@ -1,0 +1,21 @@
+
+twilio:
+  account_sid: AC807e99772a64c14af8503541e5d32e64
+  auth_token: b41de5e3fd6cb48d31951d581d3a435f
+  trial_number: +14752646818
+
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/alterna_onboarding?useSSL=false&serverTimeZone=UTC*useLegacyDateTimeCode=false
+    username: root
+    driver-class-name: com.mysql.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
