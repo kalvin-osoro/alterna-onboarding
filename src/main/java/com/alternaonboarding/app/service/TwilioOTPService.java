@@ -3,6 +3,7 @@ package com.alternaonboarding.app.service;
 
 import com.alternaonboarding.app.config.TwilioConfig;
 import com.alternaonboarding.app.dto.OtpStatus;
+import com.alternaonboarding.app.dto.SendOtpRequestDto;
 import com.alternaonboarding.app.dto.SendOtpResponseDto;
 import com.alternaonboarding.app.models.User;
 import com.alternaonboarding.app.repository.UserRepository;
@@ -29,7 +30,7 @@ public class TwilioOTPService {
 
     private Map<String, Otp> otpMap = new HashMap<>();
 
-    public Mono<SendOtpResponseDto> sendOtpForVerification(String sendOtpRequestDto) {
+    public Mono<SendOtpResponseDto> sendOtpForVerification(SendOtpRequestDto sendOtpRequestDto) {
 
         SendOtpResponseDto sendOtpResponseDto = null;
         try {
@@ -41,7 +42,7 @@ public class TwilioOTPService {
                     .creator(to, from,
                             otpMessage)
                     .create();
-            otpMap.put(sendOtpRequestDto.getPhoneNumber(), new Otp(otp, System.currentTimeMillis()));
+            otpMap.put(sendOtpRequestDto.getPhzoneNumber(), new Otp(otp, System.currentTimeMillis()));
 
             sendOtpResponseDto = new SendOtpResponseDto(OtpStatus.DELIVERED, otpMessage);
         } catch (Exception ex) {

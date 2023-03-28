@@ -24,9 +24,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private TwilioOTPService twilioOTPService;
-
 
    @Transactional
    @Override
@@ -45,16 +42,10 @@ public class UserServiceImpl implements UserService {
            user.setPhoneNumber(signupDto.getPhoneNumber());
            user.setEmail(signupDto.getEmail());
            user.setPin(signupDto.getPin());
-           user.setVerified(false);
 
            userRepository.save(user);
 
-           //send otp verification code to user
-       String verificationCode = String.valueOf(twilioOTPService.sendOtpForVerification(user.getPhoneNumber()));
-//       user.setVerificationCode(verificationCode);
-       userRepository.save(user);
-
-           ResponseDto responseDto = new ResponseDto("success", "OTP verification code sent successfully");
+           ResponseDto responseDto = new ResponseDto("success", "User added successfully");
            return responseDto;
 
        }
