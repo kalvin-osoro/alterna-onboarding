@@ -1,14 +1,12 @@
 package com.alternaonboarding.app.service.impl;
 
 import com.alternaonboarding.app.dto.ResponseDto;
-import com.alternaonboarding.app.dto.SendOtpRequestDto;
-import com.alternaonboarding.app.dto.SendOtpResponseDto;
 import com.alternaonboarding.app.dto.user.LoginDto;
+import com.alternaonboarding.app.dto.user.SetPinDto;
 import com.alternaonboarding.app.dto.user.SignupDto;
 import com.alternaonboarding.app.exceptions.CustomException;
 import com.alternaonboarding.app.models.User;
 import com.alternaonboarding.app.repository.UserRepository;
-import com.alternaonboarding.app.service.TwilioOTPService;
 import com.alternaonboarding.app.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +48,46 @@ public class UserServiceImpl implements UserService {
 
        }
 
+//    @Override
+//    public ResponseDto setNewPin(String phoneNumber, String newPin, String confirmPin) throws CustomException {
+//        User user = userRepository.findByPhoneNumber(phoneNumber);
+//        if (user == null) {
+//            throw new CustomException("User not found");
+//        }
+////        if (!user.isVerified()) {
+////            throw new CustomException("User account not verified");
+////        }
+//        if (!newPin.equals(confirmPin)) {
+//
+//            throw new CustomException("new pin and confirm pin do not match");
+//        }
+//        if (newPin.length() != 4) {
+//            throw new CustomException("new pin should be 4 characters long");
+//        }
+//        user.setPin(newPin);
+//        userRepository.save(user);
+//
+//        return new ResponseDto("success", "pin changed successfully");
+//    }
+
     @Override
-    public ResponseDto setNewPin(String phoneNumber, String newPin) throws CustomException {
-        return null;
+    public ResponseDto setPin(SetPinDto setPinDto) throws CustomException {
+        User user = userRepository.findByPhoneNumber(setPinDto.getPhoneNumber());
+        if (user == null) {
+            throw new CustomException("User not found");
+        }
+        if (!setPinDto.getNewPin().equals(setPinDto.getConfirmNewPin())) {
+            throw new CustomException("New pin and confirm pin do not match");
+        }
+        if (setPinDto.getNewPin().length() != 4) {
+            throw new CustomException("New pin should be 4 characters long");
+        }
+        user.setPin(setPinDto.getNewPin());
+        userRepository.save(user);
+        return new ResponseDto("success", "Pin changed successfully");
     }
+
+
 
 
     @Override
@@ -71,46 +105,6 @@ public class UserServiceImpl implements UserService {
         }
         return new ResponseDto("success", "Login successful");
     }
-
-
-//    public Mono<SendOtpResponseDto> registerUser(SendOtpRequestDto sendOtpRequestDto) {
-//        return twilioOTPService.sendOtpForVerification(sendOtpRequestDto);
-//    }
-
-//    public Mono<String> registerUser(SendOtpRequestDto sendOtpRequestDto) {
-////        return twilioOTPService.sendOtpForVerification(sendOtpRequestDto)
-////                .flatMap(response -> {
-//////                    if (response.getStatus().equalsIgnoreCase("pending")) {
-////                    if (response.getStatus() != null && response.getStatus().equals("pending")) {
-////                        return Mono.just(response);
-////                    } else {
-//                        User user = User.builder()
-//                                .fullname(sendOtpRequestDto.getFullName())
-//                                .nationalId(sendOtpRequestDto.getNationalId())
-//                                .dob(sendOtpRequestDto.getDob())
-//                                .gender(sendOtpRequestDto.getGender())
-//                                .phoneNumber(sendOtpRequestDto.getPhoneNumber())
-//                                .email(sendOtpRequestDto.getEmail())
-//                                .verified(true) // Set the verified flag to true
-//                                .build();
-//                        userRepository.save(user);
-//                        return Mono.just("user registered susssfully");
-////                    }
-////                });
-//    }
-
-
-
-//    public Mono<String> validateOtp(String userInputOtp, String username) {
-//        return twilioOTPService.validateOTP(userInputOtp, username);
-//    }
-//public Mono<String> validateOtp(String userInputOtp, String username) {
-//    return twilioOTPService.validateOTP(userInputOtp, username);
-//}
-
-
-
-
 
 }
 

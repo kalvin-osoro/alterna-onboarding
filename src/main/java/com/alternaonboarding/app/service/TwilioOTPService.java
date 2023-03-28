@@ -5,8 +5,6 @@ import com.alternaonboarding.app.config.TwilioConfig;
 import com.alternaonboarding.app.dto.OtpStatus;
 import com.alternaonboarding.app.dto.SendOtpRequestDto;
 import com.alternaonboarding.app.dto.SendOtpResponseDto;
-import com.alternaonboarding.app.models.User;
-import com.alternaonboarding.app.repository.UserRepository;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +22,6 @@ public class TwilioOTPService {
     @Autowired
     private TwilioConfig twilioConfig;
 
-    @Autowired
-    UserRepository userRepository;
-
-
     private Map<String, Otp> otpMap = new HashMap<>();
 
     public Mono<SendOtpResponseDto> sendOtpForVerification(SendOtpRequestDto sendOtpRequestDto) {
@@ -42,7 +36,7 @@ public class TwilioOTPService {
                     .creator(to, from,
                             otpMessage)
                     .create();
-            otpMap.put(sendOtpRequestDto.getPhoneNumber(), new Otp(otp, System.currentTimeMillis()));
+            otpMap.put(sendOtpRequestDto.getUserName(), new Otp(otp, System.currentTimeMillis()));
 
             sendOtpResponseDto = new SendOtpResponseDto(OtpStatus.DELIVERED, otpMessage);
         } catch (Exception ex) {
@@ -60,10 +54,8 @@ public class TwilioOTPService {
             long currentTime = System.currentTimeMillis();
             if (generatedOtp.equals(userInputOtp) && currentTime - generationTime <= 120000) {
                 otpMap.remove(phoneNumber);
-                User user = userRepository.findByPhoneNumber(phoneNumber);
-                user.setVerified(true);
-                userRepository.save(user);
-                return Mono.just("Valid OTP, please proceed to login");
+                return Mono.just("Valid OTP, please set new pin");
+
             } else if (generatedOtp.equals(userInputOtp) && currentTime - generationTime > 120000) {
                 otpMap.remove(phoneNumber);
                 return Mono.error(new IllegalArgumentException("OTP expired, please request for a new one"));

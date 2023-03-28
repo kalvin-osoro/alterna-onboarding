@@ -16,15 +16,4 @@ public class SendOtpResponseDto {
     private String message;
 
 
-//    public SendOtpResponseDto(String success, String message) {
-//
-//    }
-
-//    public SendOtpResponseDto(OtpStatus delivered, String otpMessage) {
-//
-//    }
-
-//    public SendOtpResponseDto(OtpStatus delivered, String otpMessage) {
-//
-//    }
 }

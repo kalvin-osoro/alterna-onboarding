@@ -2,6 +2,7 @@ package com.alternaonboarding.app.controller;
 
 import com.alternaonboarding.app.dto.ResponseDto;
 import com.alternaonboarding.app.dto.user.LoginDto;
+import com.alternaonboarding.app.dto.user.SetPinDto;
 import com.alternaonboarding.app.dto.user.SignupDto;
 import com.alternaonboarding.app.exceptions.CustomException;
 import com.alternaonboarding.app.service.impl.UserServiceImpl;
@@ -24,6 +25,8 @@ public class UserController {
         return userService.registerUser(signupDto);
     }
 
+
+
     @PostMapping("/login")
     public ResponseEntity<ResponseDto> login(@Valid @RequestBody LoginDto loginDto) {
         ResponseDto responseDto = new ResponseDto();
@@ -36,6 +39,38 @@ public class UserController {
         }
         return ResponseEntity.ok().body(responseDto);
     }
+
+    @PostMapping("/change-pin")
+//    public ResponseEntity<ResponseDto> changePin(@RequestBody SetPinDto setPinDto, @RequestParam String newPin) {
+    public ResponseEntity<ResponseDto> changePin(@RequestBody SetPinDto setPinDto) {
+        ResponseDto responseDto = new ResponseDto();
+        try {
+//            responseDto = userService.setPin(setPinDto, newPin);
+            responseDto = userService.setPin(setPinDto);
+            responseDto.setMessage("PIN changed successfully");
+        } catch (CustomException e) {
+            responseDto.setStatus("error");
+            responseDto.setMessage(e.getMessage());
+        }
+        return ResponseEntity.ok().body(responseDto);
+    }
+
+//    @PostMapping("/pin")
+//    public ResponseEntity<ResponseDto> changePin(
+//            @RequestParam(name = "phone_number") String phoneNumber,
+//            @RequestParam(name = "new_pin") String newPin,
+//            @RequestParam(name = "confirm_new_pin") String confirmNewPin) {
+//        ResponseDto responseDto = new ResponseDto();
+//
+//        try {
+//            responseDto = userService.setNewPin(phoneNumber, newPin, confirmNewPin);
+//            responseDto.setMessage("PIN changed successfully");
+//        } catch (CustomException e) {
+//            responseDto.setStatus("error");
+//            responseDto.setMessage(e.getMessage());
+//        }
+//        return ResponseEntity.ok().body(responseDto);
+//    }
 
 
 //    @PostMapping("/login")

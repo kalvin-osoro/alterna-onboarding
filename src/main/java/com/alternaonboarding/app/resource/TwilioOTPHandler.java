@@ -15,8 +15,6 @@ public class TwilioOTPHandler {
     @Autowired
     private TwilioOTPService service;
 
-
-
     public Mono<ServerResponse> sendOTP(ServerRequest serverRequest) {
         return serverRequest.bodyToMono(SendOtpRequestDto.class)
                 .flatMap(dto -> service.sendOtpForVerification(dto))

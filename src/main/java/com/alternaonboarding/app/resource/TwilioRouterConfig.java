@@ -18,8 +18,8 @@ public class TwilioRouterConfig {
     @Bean
     public RouterFunction<ServerResponse> handleSMS() {
         return RouterFunctions.route()
-                .POST("/router/sendOtp", handler::sendOTP)
-                .POST("/router/validateOtp", handler::validateOTP)
+                .POST("/router/sendOTP", handler::sendOTP)
+                .POST("/router/validateOTP", handler::validateOTP)
                 .build();
     }
 }
