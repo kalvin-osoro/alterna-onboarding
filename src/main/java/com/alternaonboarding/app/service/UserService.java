@@ -10,5 +10,7 @@ import com.alternaonboarding.app.exceptions.CustomException;
 public interface UserService {
 
     ResponseDto registerUser(SignupDto signupDto) throws CustomException;
+
+    ResponseDto setNewPin(String phoneNumber,String newPin) throws CustomException;
     ResponseDto login(LoginDto loginDto) throws CustomException;
 }

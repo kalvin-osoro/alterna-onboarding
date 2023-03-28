@@ -51,6 +51,12 @@ public class UserServiceImpl implements UserService {
        }
 
     @Override
+    public ResponseDto setNewPin(String phoneNumber, String newPin) throws CustomException {
+        return null;
+    }
+
+
+    @Override
     public ResponseDto login(LoginDto loginDto) throws CustomException {
 //        Optional<User> user = userRepository.findByPhoneNumber(loginDto.getPhoneNumber());
         User user = userRepository.findByPhoneNumber(loginDto.getPhoneNumber());

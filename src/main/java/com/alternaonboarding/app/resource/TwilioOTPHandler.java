@@ -19,7 +19,7 @@ public class TwilioOTPHandler {
 
     public Mono<ServerResponse> sendOTP(ServerRequest serverRequest) {
         return serverRequest.bodyToMono(SendOtpRequestDto.class)
-                .flatMap(dto -> service.sendOtpForVerification(String.valueOf(dto)))
+                .flatMap(dto -> service.sendOtpForVerification(dto))
                 .flatMap(dto -> ServerResponse.status(HttpStatus.OK)
                         .body(BodyInserters.fromValue(dto)));
 
