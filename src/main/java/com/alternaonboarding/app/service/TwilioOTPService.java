@@ -36,7 +36,7 @@ public class TwilioOTPService {
                     .creator(to, from,
                             otpMessage)
                     .create();
-            otpMap.put(sendOtpRequestDto.getUserName(), new Otp(otp, System.currentTimeMillis()));
+            otpMap.put(sendOtpRequestDto.getPhoneNumber(), new Otp(otp, System.currentTimeMillis()));
 
             sendOtpResponseDto = new SendOtpResponseDto(OtpStatus.DELIVERED, otpMessage);
         } catch (Exception ex) {

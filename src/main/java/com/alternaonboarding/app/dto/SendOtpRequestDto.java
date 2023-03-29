@@ -12,7 +12,7 @@ public class SendOtpRequestDto {
 
     private String phoneNumber;//destination
 
-    private String userName;
+//    private String userName;
     private String oneTimePassword;
 
 
