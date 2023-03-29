@@ -32,6 +32,6 @@ public class SignupDto {
 
     private String email;
 
-    private String pin;
+    private String pin = String.valueOf(0000);
 
 }

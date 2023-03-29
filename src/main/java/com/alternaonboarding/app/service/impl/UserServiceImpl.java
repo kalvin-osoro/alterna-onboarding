@@ -76,6 +76,9 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new CustomException("User not found");
         }
+        if (!user.isVerified()) {
+            throw new CustomException("User account not verified");
+        }
         if (!setPinDto.getNewPin().equals(setPinDto.getConfirmNewPin())) {
             throw new CustomException("New pin and confirm pin do not match");
         }

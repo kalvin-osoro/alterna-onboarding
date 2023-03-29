@@ -6,4 +6,5 @@ import lombok.Data;
 public class LoginDto {
     private String phoneNumber;
     private String pin;
+//    private String oneTimePassword;
 }
