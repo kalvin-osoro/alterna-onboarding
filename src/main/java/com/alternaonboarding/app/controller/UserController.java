@@ -5,6 +5,7 @@ import com.alternaonboarding.app.dto.user.LoginDto;
 import com.alternaonboarding.app.dto.user.SetPinDto;
 import com.alternaonboarding.app.dto.user.SignupDto;
 import com.alternaonboarding.app.exceptions.CustomException;
+import com.alternaonboarding.app.service.impl.TwilioOTPServiceImpl;
 import com.alternaonboarding.app.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     UserServiceImpl userService;
+
+    @Autowired
+    TwilioOTPServiceImpl twilioOTPService;
 
 
 

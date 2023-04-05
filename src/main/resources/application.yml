@@ -7,13 +7,13 @@ twilio:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/alterna_onboarding?useSSL=false&serverTimeZone=UTC*useLegacyDateTimeCode=false
+    url: jdbc:mysql://localhost:3306/alterna?useSSL=false&serverTimeZone=UTC*useLegacyDateTimeCode=false
     username: root
     driver-class-name: com.mysql.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     show-sql: false
     properties:
       hibernate:

@@ -1,6 +1,7 @@
 package com.alternaonboarding.app.service.impl;
 
 import com.alternaonboarding.app.dto.ResponseDto;
+import com.alternaonboarding.app.dto.SendOtpRequestDto;
 import com.alternaonboarding.app.dto.user.LoginDto;
 import com.alternaonboarding.app.dto.user.SetPinDto;
 import com.alternaonboarding.app.dto.user.SignupDto;
@@ -8,12 +9,12 @@ import com.alternaonboarding.app.exceptions.CustomException;
 import com.alternaonboarding.app.models.User;
 import com.alternaonboarding.app.repository.UserRepository;
 import com.alternaonboarding.app.service.UserService;
+import com.alternaonboarding.app.utils.CommonFunctions;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,7 +22,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    TwilioOTPServiceImpl twilioOTPService;
 
+    private static CommonFunctions commonFunctions;
 
    @Transactional
    @Override
@@ -41,34 +45,20 @@ public class UserServiceImpl implements UserService {
            user.setEmail(signupDto.getEmail());
            user.setPin(signupDto.getPin());
 
-           userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        //send verification code
+       String verificationCode = commonFunctions.generateOTP();
+       twilioOTPService.sendOtpForVerification(
+               SendOtpRequestDto.builder()
+                       .phoneNumber(signupDto.getPhoneNumber())
 
-           ResponseDto responseDto = new ResponseDto("success", "User added successfully");
+                       .build()
+       );
+
+       ResponseDto responseDto = new ResponseDto("success", "User added successfully");
            return responseDto;
 
        }
-
-//    @Override
-//    public ResponseDto setNewPin(String phoneNumber, String newPin, String confirmPin) throws CustomException {
-//        User user = userRepository.findByPhoneNumber(phoneNumber);
-//        if (user == null) {
-//            throw new CustomException("User not found");
-//        }
-////        if (!user.isVerified()) {
-////            throw new CustomException("User account not verified");
-////        }
-//        if (!newPin.equals(confirmPin)) {
-//
-//            throw new CustomException("new pin and confirm pin do not match");
-//        }
-//        if (newPin.length() != 4) {
-//            throw new CustomException("new pin should be 4 characters long");
-//        }
-//        user.setPin(newPin);
-//        userRepository.save(user);
-//
-//        return new ResponseDto("success", "pin changed successfully");
-//    }
 
     @Override
     public ResponseDto setPin(SetPinDto setPinDto) throws CustomException {
@@ -89,9 +79,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return new ResponseDto("success", "Pin changed successfully");
     }
-
-
-
 
     @Override
     public ResponseDto login(LoginDto loginDto) throws CustomException {

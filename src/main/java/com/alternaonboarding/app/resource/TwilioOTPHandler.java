@@ -1,7 +1,7 @@
 package com.alternaonboarding.app.resource;
 
 import com.alternaonboarding.app.dto.SendOtpRequestDto;
-import com.alternaonboarding.app.service.TwilioOTPService;
+import com.alternaonboarding.app.service.impl.TwilioOTPServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class TwilioOTPHandler {
     @Autowired
-    private TwilioOTPService service;
+    private TwilioOTPServiceImpl service;
 
     public Mono<ServerResponse> sendOTP(ServerRequest serverRequest) {
         return serverRequest.bodyToMono(SendOtpRequestDto.class)
