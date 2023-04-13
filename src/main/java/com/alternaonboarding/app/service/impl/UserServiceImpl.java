@@ -10,20 +10,30 @@ import com.alternaonboarding.app.models.User;
 import com.alternaonboarding.app.repository.UserRepository;
 import com.alternaonboarding.app.service.UserService;
 import com.alternaonboarding.app.utils.CommonFunctions;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    TwilioOTPServiceImpl twilioOTPService;
+
+    private final UserRepository userRepository;
+
+   private final TwilioOTPServiceImpl twilioOTPService;
+
+   private final JavaMailSender mailSender;
 
     private static CommonFunctions commonFunctions;
 
@@ -55,10 +65,68 @@ public class UserServiceImpl implements UserService {
                        .build()
        );
 
+       //send confirmation email
+       SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+
+//           MimeMessage message = mailSender.createMimeMessage();
+//           MimeMessageHelper helper = new MimeMessageHelper(message, true);
+       mailMessage.setTo(signupDto.getEmail());
+       mailMessage.setSubject("Confirm your email");
+       mailMessage.setText("<html><body><p>Thank you for registering with us.</p>"
+                                          + "<p>Please click on the following link to confirm your email and activate your account:</p>"
+                                           +   "<p><a href='http://example.com/confirm-email?code=" + verificationCode + "'>Confirm email</a></p>"
+                                            +  "</body></html>");
+       mailSender.send(mailMessage);
+
        ResponseDto responseDto = new ResponseDto("success", "User added successfully");
            return responseDto;
 
        }
+
+       //.......................................................................................................................
+       @Transactional
+       @Override
+       public ResponseDto registerUserWeb(SignupDto signupDto) throws CustomException {
+           if (Objects.nonNull(userRepository.findByEmail(signupDto.getEmail()))) {
+               throw  new CustomException("User with email already exists");
+           }
+           if (!signupDto.getPhoneNumber().equals(signupDto.getConfirmPhoneNumber())) {
+               throw new CustomException("Phone numbers do not match");
+           }
+           User user = new User();
+           user.setFullName(signupDto.getFullName());
+           user.setNationalId(signupDto.getNationalId());
+           user.setDob(signupDto.getDob());
+           user.setGender(signupDto.getGender());
+           user.setPhoneNumber(signupDto.getPhoneNumber());
+           user.setEmail(signupDto.getEmail());
+           user.setPin(signupDto.getPin());
+
+           User savedUser = userRepository.save(user);
+
+           //send confirmation email
+           SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+
+//           MimeMessage message = mailSender.createMimeMessage();
+//           MimeMessageHelper helper = new MimeMessageHelper(message, true);
+           mailMessage.setTo(signupDto.getEmail());
+           mailMessage.setSubject("Confirm your email");
+           mailMessage.setText("<html><body><p>Thank you for registering with us.</p>"
+                   + "<p>Please click on the following link to confirm your email and activate your account:</p>"
+                   +   "<p><a href='http://example.com/confirm-email?'>Confirm email</a></p>"
+                   +  "</body></html>");
+           mailSender.send(mailMessage);
+
+           ResponseDto responseDto = new ResponseDto("success", "User added successfully");
+           return responseDto;
+
+       }
+
+       //.......................................................................................................................
+
+
 
     @Override
     public ResponseDto setPin(SetPinDto setPinDto) throws CustomException {

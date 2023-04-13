@@ -1,11 +1,26 @@
 
 twilio:
   account_sid: AC807e99772a64c14af8503541e5d32e64
-  auth_token: 0d45b833532a9586fb79675573fa7a0d
+  auth_token: fa735c1410f49826504bc81843078712
   trial_number: +14752646818
 
 #  jdbc:mysql://localhost:3306/alterna?useSSL=false&serverTimeZone=UTC*useLegacyDateTimeCode=false
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: kevinpeter0057@gmail.com
+    password: kyblkbophqxbcktd
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+
+
   datasource:
     url: jdbc:mysql://alterna-savings.caznqi4vn7za.eu-north-1.rds.amazonaws.com:3306/alterna_db?useSSL=false&serverTimeZone=UTC*useLegacyDateTimeCode=false
     username: admin
