@@ -66,16 +66,17 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new CustomException("User not found");
         }
-        if (!user.isVerified()) {
-            throw new CustomException("User account not verified");
-        }
+//        if (!user.isVerified()) {
+//            throw new CustomException("User account not verified");
+//        }
         if (!setPinDto.getNewPin().equals(setPinDto.getConfirmNewPin())) {
             throw new CustomException("New pin and confirm pin do not match");
         }
-        if (setPinDto.getNewPin().length() != 4) {
-            throw new CustomException("New pin should be 4 characters long");
+        if (setPinDto.getNewPin().length() != 6) {
+            throw new CustomException("New pin should be 6 characters long");
         }
         user.setPin(setPinDto.getNewPin());
+        user.setVerified(true);
         userRepository.save(user);
         return new ResponseDto("success", "Pin changed successfully");
     }
