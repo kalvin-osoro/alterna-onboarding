@@ -75,11 +75,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
+<<<<<<< HEAD
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
 
+=======
+>>>>>>> 491f8ee782bc91a23d5662787470acecb8467cc4
 	</dependencies>
 
 	<build>
