@@ -1,10 +1,7 @@
 package com.alternaonboarding.app.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 
@@ -22,18 +19,30 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private  Long id;
+
 
     private String fullName;
 
+
     private int nationalId;
 
-    @Column(name = "date_of_birth")
+
+    @Column(name = "date_of_birth", columnDefinition = "DATE DEFAULT '1970-01-01'")
     private Date dob;
+
+
+
+//    @Column(name = "date_of_birth")
+//    private Date dob;
+
 
     private String gender;
 
+
     private String phoneNumber;
+
+
     private String email;
 
     private String pin = String.valueOf(0000);

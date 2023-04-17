@@ -8,18 +8,22 @@ import com.alternaonboarding.app.exceptions.CustomException;
 import com.alternaonboarding.app.service.impl.TwilioOTPServiceImpl;
 import com.alternaonboarding.app.service.impl.UserServiceImpl;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("user")
 @RestController
+@RequiredArgsConstructor
+@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
-    @Autowired
-    UserServiceImpl userService;
 
-    @Autowired
-    TwilioOTPServiceImpl twilioOTPService;
+   private final UserServiceImpl userService;
+
+
+   private final TwilioOTPServiceImpl twilioOTPService;
 
 
 
@@ -36,6 +40,19 @@ public class UserController {
         ResponseDto responseDto = new ResponseDto();
         try {
             responseDto = userService.login(loginDto);
+            responseDto.setMessage("Login successful");
+        } catch (CustomException e) {
+            responseDto.setStatus("error");
+            responseDto.setMessage(e.getMessage());
+        }
+        return ResponseEntity.ok().body(responseDto);
+    }
+
+    @PostMapping("/old-login")
+    public ResponseEntity<ResponseDto> oldLogin(@Valid @RequestBody LoginDto loginDto) {
+        ResponseDto responseDto = new ResponseDto();
+        try {
+            responseDto = userService.oldLogin(loginDto);
             responseDto.setMessage("Login successful");
         } catch (CustomException e) {
             responseDto.setStatus("error");

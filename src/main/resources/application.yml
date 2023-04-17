@@ -1,14 +1,36 @@
 
 twilio:
   account_sid: AC807e99772a64c14af8503541e5d32e64
-  auth_token: 5073af0ef6632458b0ad245274062108
+  auth_token: 4d0159322dd35640f5df56ad9971eabb
   trial_number: +14752646818
 
-
+#  jdbc:mysql://localhost:3306/alterna?useSSL=false&serverTimeZone=UTC*useLegacyDateTimeCode=false
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: kevinpeter0057@gmail.com
+    password: kyblkbophqxbcktd
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  cors:
+    allowed-origins: "*"
+
+
+#jdbc:mysql://alterna-savings.caznqi4vn7za.eu-north-1.rds.amazonaws.com:3306/alterna_db?useSSL=false&serverTimeZone=UTC*useLegacyDateTimeCode=false
+#  jdbc:mysql://localhost:3306/alterna?useSSL=false&serverTimeZone=UTC*useLegacyDateTimeCode=false
+
+
   datasource:
-    url: jdbc:mysql://localhost:3306/alterna?useSSL=false&serverTimeZone=UTC*useLegacyDateTimeCode=false
+    url: jdbc:mysql://localhost:3306/alterna_test?useSSL=false&serverTimeZone=UTC*useLegacyDateTimeCode=false
     username: root
+#    username: admin
+#    password: Athena0057
     driver-class-name: com.mysql.jdbc.Driver
 
   jpa:
@@ -19,3 +41,6 @@ spring:
       hibernate:
         format_sql: true
     database: mysql
+
+server:
+  address: 0.0.0.0
