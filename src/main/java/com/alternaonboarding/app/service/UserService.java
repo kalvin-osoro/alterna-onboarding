@@ -11,11 +11,8 @@ import com.alternaonboarding.app.exceptions.CustomException;
 public interface UserService {
 
     ResponseDto registerUser(SignupDto signupDto) throws CustomException;
-<<<<<<< HEAD
+
     ResponseDto registerUserWeb(SignupDto signupDto) throws CustomException;
-=======
-    ResponseDto registerUserWeb(SignupDto signupDto) throws CustomException
->>>>>>> 491f8ee782bc91a23d5662787470acecb8467cc4
 
     ResponseDto setPin(SetPinDto setPinDto) throws CustomException;
 //    ResponseDto setNewPin(String phoneNumber, String newPin, String confirmPin) throws CustomException;

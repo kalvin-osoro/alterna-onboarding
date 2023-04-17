@@ -1,11 +1,7 @@
 
 twilio:
   account_sid: AC807e99772a64c14af8503541e5d32e64
-<<<<<<< HEAD
-  auth_token: 4d0159322dd35640f5df56ad9971eabb
-=======
-  auth_token: fa735c1410f49826504bc81843078712
->>>>>>> 491f8ee782bc91a23d5662787470acecb8467cc4
+  auth_token: 1d757d29b324287b4824b65308b796df
   trial_number: +14752646818
 
 #  jdbc:mysql://localhost:3306/alterna?useSSL=false&serverTimeZone=UTC*useLegacyDateTimeCode=false
@@ -22,7 +18,7 @@ spring:
           starttls:
             enable: true
 
-<<<<<<< HEAD
+
   cors:
     allowed-origins: "*"
 
@@ -36,16 +32,15 @@ spring:
     username: root
 #    username: admin
 #    password: Athena0057
-=======
 
 
 
-  datasource:
-    url: jdbc:mysql://alterna-savings.caznqi4vn7za.eu-north-1.rds.amazonaws.com:3306/alterna_db?useSSL=false&serverTimeZone=UTC*useLegacyDateTimeCode=false
-    username: admin
-    password: Athena0057
->>>>>>> 491f8ee782bc91a23d5662787470acecb8467cc4
-    driver-class-name: com.mysql.jdbc.Driver
+
+#  datasource:
+#    url: jdbc:mysql://alterna-savings.caznqi4vn7za.eu-north-1.rds.amazonaws.com:3306/alterna_db?useSSL=false&serverTimeZone=UTC*useLegacyDateTimeCode=false
+#    username: admin
+#    password: Athena0057
+#    driver-class-name: com.mysql.jdbc.Driver
 
   jpa:
     hibernate:

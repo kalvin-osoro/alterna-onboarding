@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("user")
 @RestController
 @RequiredArgsConstructor
-<<<<<<< HEAD
+
 @CrossOrigin(origins = "*")
 //@CrossOrigin(origins = "http://localhost:4200")
-=======
->>>>>>> 491f8ee782bc91a23d5662787470acecb8467cc4
+
 public class UserController {
 
    private final UserServiceImpl userService;

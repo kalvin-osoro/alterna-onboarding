@@ -14,16 +14,16 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-<<<<<<< HEAD
+
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-=======
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
->>>>>>> 491f8ee782bc91a23d5662787470acecb8467cc4
+
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
                        .build()
        );
 
-<<<<<<< HEAD
+
 //       //send confirmation email
 //       SimpleMailMessage mailMessage = new SimpleMailMessage();
 //
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
 //                                            +  "</body></html>");
 //       mailSender.send(mailMessage);
 //
-=======
+
        //send confirmation email
        SimpleMailMessage mailMessage = new SimpleMailMessage();
 
@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
                                             +  "</body></html>");
        mailSender.send(mailMessage);
 
->>>>>>> 491f8ee782bc91a23d5662787470acecb8467cc4
+
        ResponseDto responseDto = new ResponseDto("success", "User added successfully");
            return responseDto;
 
@@ -127,11 +127,11 @@ public class UserServiceImpl implements UserService {
            User user = new User();
            user.setFullName(signupDto.getFullName());
            user.setNationalId(signupDto.getNationalId());
-<<<<<<< HEAD
+
 //           user.setDob(signupDto.getDob());
-=======
+
            user.setDob(signupDto.getDob());
->>>>>>> 491f8ee782bc91a23d5662787470acecb8467cc4
+
            user.setGender(signupDto.getGender());
            user.setPhoneNumber(signupDto.getPhoneNumber());
            user.setEmail(signupDto.getEmail());
