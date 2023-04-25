@@ -14,15 +14,14 @@ import java.util.Date;
 @NoArgsConstructor
 public class SignupDto {
 
-//    private String phoneNumber;//destination
-//    private String username;
-//    private String oneTimePassword;
 
     private String fullName;
-    private int nationalId;
+//    private int nationalId;
+    private int idNumber;
 
     @Column(name = "date_of_birth")
-    private Date dob;
+//    private Date dob;
+    private Date dateOfBirth;
 
     private String gender;
 
